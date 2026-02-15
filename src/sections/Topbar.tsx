@@ -8,18 +8,25 @@ const Topbar = () => {
           {/* Contact Info */}
           <div className="flex items-center gap-4 sm:gap-6">
             <a 
-              href="mailto:info@neurolearnn.com" 
+              href="mailto:neurolearnn@gmail.com" 
               className="flex items-center gap-2 hover:text-orange-400 transition-colors duration-200"
             >
               <Mail className="w-4 h-4" />
-              <span className="hidden sm:inline">info@neurolearnn.com</span>
+              <span className="hidden sm:inline">neurolearnn@gmail.com</span>
             </a>
             <a 
-              href="tel:+15551234567" 
+              href="tel:+918360528753" 
               className="flex items-center gap-2 hover:text-orange-400 transition-colors duration-200"
             >
               <Phone className="w-4 h-4" />
-              <span className="hidden sm:inline">+1 (555) 123-4567</span>
+              <span className="hidden sm:inline">+91-8360528753</span>
+            </a>
+            <a 
+              href="tel:+918360378385" 
+              className="flex items-center gap-2 hover:text-orange-400 transition-colors duration-200"
+            >
+              <Phone className="w-4 h-4" />
+              <span className="hidden sm:inline">+91-8360378385</span>
             </a>
           </div>
           

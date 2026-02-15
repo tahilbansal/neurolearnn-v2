@@ -21,6 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+const emailjs = await import('@emailjs/browser');
 
 const subjects = [
   'SAT',
@@ -40,6 +41,8 @@ const subjects = [
 const Contact = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -68,21 +71,55 @@ const Contact = () => {
     return () => observer.disconnect();
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate form submission
-    setIsSubmitted(true);
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        grade: '',
-        message: '',
-      });
-    }, 3000);
+    setSubmitError(null);
+    setIsSubmitting(true);
+
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID as string | undefined;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string | undefined;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY as string | undefined;
+    const to_email = import.meta.env.VITE_EMAILJS_TO_EMAIL as string | undefined;
+
+    if (!serviceId || !templateId || !publicKey || !to_email) {
+      setSubmitError('Email service is not configured yet.');
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          to_email: to_email,
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          grade: formData.grade,
+          subject: formData.subject,
+          message: formData.message || 'N/A',
+        },
+        publicKey
+      );
+
+      setIsSubmitted(true);
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          subject: '',
+          grade: '',
+          message: '',
+        });
+      }, 3000);
+    } catch (error) {
+      setSubmitError('Failed to send. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (field: string, value: string) => {
@@ -93,17 +130,17 @@ const Contact = () => {
     {
       icon: MapPin,
       title: 'Visit Us',
-      details: ['123 Education Street', 'New York, NY 10001'],
+      details: ['Kesar Bagh, Patiala'],
     },
     {
       icon: Phone,
       title: 'Call Us',
-      details: ['+1 (555) 123-4567', '+1 (555) 987-6543'],
+      details: ['+91-8360528753', '+91-8360378385'],
     },
     {
       icon: Mail,
       title: 'Email Us',
-      details: ['info@neurolearnn.com', 'support@neurolearnn.com'],
+      details: ['neurolearnn@gmail.com'],
     },
     {
       icon: Clock,
@@ -120,11 +157,11 @@ const Contact = () => {
           className={`text-center mb-12 ${isVisible ? 'animate-slide-up' : 'opacity-0'}`}
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-poppins font-bold text-gray-900 mb-4">
-            Book Your <span className="text-orange-500">Free Trial</span>
+            Book a <span className="text-orange-500">Free Trial Session</span>
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Get started with a free week of classes. Experience our personalized 
-            tutoring approach and see the difference for yourself.
+            Schedule a free trial session to experience our personalized tutoring 
+            approach and see the difference for yourself.
           </p>
           <div className="w-24 h-1 bg-orange-500 mx-auto rounded-full mt-4" />
         </div>
@@ -239,7 +276,7 @@ const Contact = () => {
                       <Input
                         id="phone"
                         type="tel"
-                        placeholder="+1 (555) 000-0000"
+                        placeholder="+91-XXXXXXXXXX"
                         value={formData.phone}
                         onChange={(e) => handleChange('phone', e.target.value)}
                         className="pl-10 h-12"
@@ -318,10 +355,17 @@ const Contact = () => {
                 <Button
                   type="submit"
                   className="w-full btn-primary text-lg py-4 h-auto"
+                  disabled={isSubmitting}
                 >
-                  Book Free Trial Class
+                  {isSubmitting ? 'Sending...' : 'Book a Free Trial Session'}
                   <Send className="w-5 h-5 ml-2" />
                 </Button>
+
+                {submitError && (
+                  <p className="text-center text-sm text-red-500">
+                    {submitError}
+                  </p>
+                )}
 
                 <p className="text-center text-sm text-gray-500">
                   By submitting, you agree to our{' '}

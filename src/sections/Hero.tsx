@@ -125,7 +125,7 @@ const Hero = () => {
               onClick={scrollToContact}
               className="btn-primary text-lg px-8 py-4 h-auto animate-float"
             >
-              Book 1 Week Free Class
+              Book a Free Trial Session
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
           </div>

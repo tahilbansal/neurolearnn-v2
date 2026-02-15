@@ -83,22 +83,29 @@ const Footer = () => {
             {/* Contact Info */}
             <div className="space-y-3">
               <a 
-                href="mailto:info@neurolearnn.com"
+                href="mailto:neurolearnn@gmail.com"
                 className="flex items-center gap-3 text-gray-400 hover:text-orange-400 transition-colors"
               >
                 <Mail className="w-5 h-5" />
-                <span className="text-sm">info@neurolearnn.com</span>
+                <span className="text-sm">neurolearnn@gmail.com</span>
               </a>
               <a 
-                href="tel:+15551234567"
+                href="tel:+918360528753"
                 className="flex items-center gap-3 text-gray-400 hover:text-orange-400 transition-colors"
               >
                 <Phone className="w-5 h-5" />
-                <span className="text-sm">+1 (555) 123-4567</span>
+                <span className="text-sm">+91-8360528753</span>
+              </a>
+              <a 
+                href="tel:+918360378385"
+                className="flex items-center gap-3 text-gray-400 hover:text-orange-400 transition-colors"
+              >
+                <Phone className="w-5 h-5" />
+                <span className="text-sm">+91-8360378385</span>
               </a>
               <div className="flex items-center gap-3 text-gray-400">
                 <MapPin className="w-5 h-5" />
-                <span className="text-sm">New York, NY 10001</span>
+                <span className="text-sm">Kesar Bagh, Patiala</span>
               </div>
             </div>
           </div>
