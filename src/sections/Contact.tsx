@@ -238,7 +238,7 @@ const Contact = () => {
                       <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                       <Input
                         id="name"
-                        placeholder="John Doe"
+                        placeholder="Full name"
                         value={formData.name}
                         onChange={(e) => handleChange('name', e.target.value)}
                         className="pl-10 h-12"
@@ -257,7 +257,7 @@ const Contact = () => {
                       <Input
                         id="email"
                         type="email"
-                        placeholder="john@example.com"
+                        placeholder="Email address"
                         value={formData.email}
                         onChange={(e) => handleChange('email', e.target.value)}
                         className="pl-10 h-12"
